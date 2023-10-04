@@ -1,7 +1,13 @@
 import React from "react";
+import { FeaturedRecipes, Hero } from "../components";
 
 const Landing = () => {
-  return <div>Landing</div>;
+  return (
+    <>
+      <Hero />
+      <FeaturedRecipes />
+    </>
+  );
 };
 
 export default Landing;

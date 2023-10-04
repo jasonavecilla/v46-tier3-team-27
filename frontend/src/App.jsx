@@ -1,5 +1,5 @@
 import React from "react";
-import { images } from "./assets/images";
+
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Error, HomeLayout, Landing } from "./pages";
 const router = createBrowserRouter([
