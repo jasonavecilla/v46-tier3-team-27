@@ -3,13 +3,14 @@
 [Demo Link](https://main--secreterecipes.netlify.app/)
 
 > Install dependencies && Start developing
-
+- cd frontend
 - npm i
 - npm run dev
 
 # Backend
 
 > Install dependencies && Start developing
+- cd backend
 
 - npm i
 
