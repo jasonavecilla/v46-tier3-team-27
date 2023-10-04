@@ -2,17 +2,18 @@
 
 [Demo Link](https://main--secreterecipes.netlify.app/)
 
-> Install dependencies
-> npm i
-> Start developing
-> npm run dev
+> Install dependencies && Start developing
+
+- npm i
+- npm run dev
 
 # Backend
 
-> Install dependencies
-> npm i
-> Start developing
-> npm run dev
+> Install dependencies && Start developing
+
+- npm i
+
+- npm run dev
 
 # voyage-tasks
 
