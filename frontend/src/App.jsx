@@ -1,22 +1,20 @@
 import React from "react";
 import { images } from "./assets/images";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Error, HomeLayout, Landing } from "./pages";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeLayout />,
+    errorElement: <Error />,
+    children: [{ index: true, element: <Landing />, errorElement: <Error /> }],
+  },
+]);
 
 const App = () => {
   return (
     <>
-      {" "}
-      <h1 className="text-3xl font-bold text-center underline">
-        Recipe Frontend
-      </h1>{" "}
-      <div className="grid mt-4 place-items-center">
-        <div className="text-center w-80 h-80 carousel carousel-center rounded-box">
-          {images.map((image, index) => (
-            <div className="carousel-item" key={index}>
-              <img src={image} alt={`image  ${index + 1}`} />
-            </div>
-          ))}
-        </div>{" "}
-      </div>
+      <RouterProvider router={router} />
     </>
   );
 };
