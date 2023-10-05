@@ -13,6 +13,12 @@
 # Frontend
 
 [Demo Link](https://main--secreterecipes.netlify.app/)
+> Architecture
+- React
+- Redux Toolkit
+- TailwindCss
+- DaisyUi
+  
 
 > Install dependencies && Start developing
 - cd frontend
@@ -20,6 +26,11 @@
 - npm run dev
 
 # Backend
+> Architecture
+- NodeJs
+- ExpressJs
+- Sequelize ORM
+- Postgresql
 
 > Install dependencies && Start developing
 - cd backend
