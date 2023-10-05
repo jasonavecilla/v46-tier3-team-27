@@ -4,7 +4,31 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { GiHotMeal } from "react-icons/gi";
 import NavLinks from "./NavLinks";
+import { useEffect } from "react";
+const themes = {
+  synthwave: "synthwave",
+  garden: "garden",
+};
+const getThemeFromLocalStorage = () => {
+  return localStorage.getItem("theme") || "synthwave";
+};
+
+const toggleTheme = () => {
+  const chosenTheme =
+    getThemeFromLocalStorage() === "synthwave" ? "garden" : "synthwave";
+  document.documentElement.setAttribute("data-theme", chosenTheme);
+  localStorage.setItem("theme", chosenTheme);
+  console.log(chosenTheme);
+};
+
 const NavBar = () => {
+  // set theme
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      getThemeFromLocalStorage()
+    );
+  });
   return (
     <nav className="bg-base-200">
       <div className="navbar align-element">
@@ -37,7 +61,11 @@ const NavBar = () => {
         <div className="navbar-end">
           {/* THEME SETUP */}
           <label className="swap swap-rotate">
-            <input type="checkbox" defaultChecked={true} />
+            <input
+              type="checkbox"
+              defaultChecked={true}
+              onChange={toggleTheme}
+            />
             <BsSunFill className="w-4 h-4 swap-on" />
             <BsMoonFill className="w-4 h-4 swap-off" />
           </label>
