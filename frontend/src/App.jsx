@@ -1,5 +1,4 @@
-import React from "react";
-
+import "../node_modules/video-react/dist/video-react.css"; // import css
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   About,
