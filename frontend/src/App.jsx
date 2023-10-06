@@ -1,7 +1,16 @@
 import React from "react";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Error, HomeLayout, Landing, Recipes } from "./pages";
+import {
+  About,
+  Error,
+  HomeLayout,
+  Landing,
+  Menu,
+  ProtectedRoute,
+  Recipes,
+  SingleRecipe,
+} from "./pages";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -10,6 +19,21 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Landing />, errorElement: <Error /> },
       { path: "/recipes", element: <Recipes />, errorElement: <Error /> },
+      {
+        path: "/recipes/:id",
+        element: <SingleRecipe />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/menu",
+        element: (
+          <ProtectedRoute>
+            <Menu />
+          </ProtectedRoute>
+        ),
+        errorElement: <Error />,
+      },
+      { path: "/about", element: <About />, errorElement: <Error /> },
     ],
   },
 ]);
