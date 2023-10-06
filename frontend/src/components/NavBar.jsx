@@ -1,10 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { GiHotMeal } from "react-icons/gi";
 import NavLinks from "./NavLinks";
 import { useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 const themes = {
   synthwave: "synthwave",
   garden: "garden",
@@ -29,6 +30,15 @@ const NavBar = () => {
       getThemeFromLocalStorage()
     );
   });
+  const { loginWithRedirect, user } = useAuth0();
+  const navigate = useNavigate();
+  const handleMenu = () => {
+    if (!user) {
+      return loginWithRedirect();
+    }
+    return navigate("/menu");
+  };
+
   return (
     <nav className="bg-base-200">
       <div className="navbar align-element">
@@ -70,9 +80,11 @@ const NavBar = () => {
             <BsMoonFill className="w-4 h-4 swap-off" />
           </label>
           {/* MENU LINK */}
-          <NavLink
+          <button
             to={"/menu"}
             className="ml-4 btn btn-ghost btn-circle btn-md"
+            type="button"
+            onClick={handleMenu}
           >
             <div className="indicator">
               <GiHotMeal className="w-6 h-6" />
@@ -80,7 +92,7 @@ const NavBar = () => {
                 2
               </span>
             </div>
-          </NavLink>
+          </button>
         </div>
       </div>
     </nav>
