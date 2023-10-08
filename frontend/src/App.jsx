@@ -1,5 +1,7 @@
 import "../node_modules/video-react/dist/video-react.css"; // import css
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { Slide, ToastContainer } from "react-toastify";
 import {
   About,
   Error,
@@ -41,6 +43,12 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
+      <ToastContainer
+        position="top-center"
+        transition={Slide}
+        hideProgressBar={true}
+        autoClose={1500}
+      />
     </>
   );
 };

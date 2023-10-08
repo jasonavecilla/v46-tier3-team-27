@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RecipesGrid from "./RecipesGrid";
+import { useDispatch } from "react-redux";
+import { getAllRecipes } from "../Features/Recipes/recipeSlice";
 
 const RecipesContainer = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllRecipes());
+  }, []);
   return (
     <>
       {/* HEADERS */}

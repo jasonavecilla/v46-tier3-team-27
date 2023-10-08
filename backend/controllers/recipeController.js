@@ -1,12 +1,79 @@
 const { StatusCodes } = require("http-status-codes");
 const { customFetch } = require("../db/axios");
-
+const { BadRequest, NotFound } = require("../errors");
 const getAllRecipes = async (req, res) => {
-  const data = await customFetch((endpoint = "list"));
-  res.status(StatusCodes.OK).json({ msg: "all recipes", recipes: data });
+  const limit = req.query.limit || 20;
+  const { search } = req.query;
+  if (limit > 40) {
+    throw new BadRequest(`Limit can't exceed 40`);
+  }
+  const page = req.query.page || 1;
+  let paramsObject = {
+    size: limit,
+    from: (page - 1) * limit,
+    sort: "approved_at:asc",
+  };
+  if (search) {
+    paramsObject.q = search;
+  }
+
+  let data = await customFetch("list", paramsObject);
+  const total = data.count;
+  const pages = Math.ceil(total / 40);
+  const recipes = data.results.map((recipe) => {
+    const { thumbnail_url, name, id, show_id, description, total_time_tier } =
+      recipe;
+    return { thumbnail_url, name, id, show_id, description, total_time_tier };
+  });
+  const currentRecipesNum = recipes.length;
+  res
+    .status(StatusCodes.OK)
+    .json({ success: true, total, currentRecipesNum, pages, recipes });
 };
 const getSingleRecipe = async (req, res) => {
-  const data = await customFetch((endpoint = "get-more-info"), (id = `8138`));
-  res.status(StatusCodes.OK).json({ data });
+  const { id } = req.params;
+  let paramsObject = {
+    id,
+  };
+  const data = await customFetch("get-more-info", paramsObject);
+  if (!data) {
+    throw new NotFound(`no recipe with id ${id}`);
+  }
+  const {
+    thumbnail_url,
+    name,
+
+    yields,
+    instructions,
+    tags,
+    original_video_url,
+    nutrition,
+  } = data;
+  res.status(StatusCodes.OK).json({
+    success: true,
+    recipe: {
+      thumbnail_url,
+      name,
+
+      yields,
+      instructions,
+      tags,
+      original_video_url,
+      nutrition,
+    },
+  });
 };
-module.exports = { getAllRecipes, getSingleRecipe };
+const popularRecipes = async (req, res) => {
+  let paramsObject = {
+    is_one_top: true,
+  };
+  const data = await customFetch("list", paramsObject);
+  const recipes = data.results.map((recipe) => {
+    const { thumbnail_url, name, id, show_id, description, total_time_tier } =
+      recipe;
+    return { thumbnail_url, name, id, show_id, description, total_time_tier };
+  });
+  res.status(StatusCodes.OK).json({ recipes });
+};
+
+module.exports = { getAllRecipes, getSingleRecipe, popularRecipes };
