@@ -6,3 +6,4 @@ export { default as RecipesContainer } from "./RecipesContainer";
 export { default as PaginationContainer } from "./PaginationContainer";
 export { default as Header } from "./Header";
 export { default as Loading } from "./Loading";
+export { default as Footer } from "./Footer";

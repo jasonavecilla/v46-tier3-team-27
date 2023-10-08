@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, useNavigation } from "react-router-dom";
-import { Header, Loading, NavBar } from "../components";
+import { Footer, Header, Loading, NavBar } from "../components";
 
 const HomeLayout = () => {
   const navigation = useNavigation();
@@ -18,6 +18,7 @@ const HomeLayout = () => {
           <Outlet />
         </section>
       )}
+      <Footer />
     </>
   );
 };
