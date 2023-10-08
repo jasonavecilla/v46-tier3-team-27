@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const customFetch = axios.create({
-  baseURL: `/api/v1`,
+  baseURL: `https://v46-tier3-team-27-production.up.railway.app/api/v1/`,
 });

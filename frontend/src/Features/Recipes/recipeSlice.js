@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { customFetch } from "../../utils/axios";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const initialState = {
   isLoading: false,
@@ -11,15 +12,21 @@ const initialState = {
 export const getAllRecipes = createAsyncThunk(
   "recipes/allRecipes",
   async (payload, thunkAPI) => {
-    const { search, page } = payload;
-    let url = `recipes?page=${payload}`;
-    if (search) {
-      url = url + `&search=${search}`;
-    }
+    // const { search, page } = payload;
+    // let url = `recipes`;
+    // if (search) {
+    //   url = url + `&search=${search}`;
+    // }
+
     try {
-      const { data } = await customFetch(url);
-      return data;
+      const res = await axios.get(
+        `https://v46-tier3-team-27-production.up.railway.app/api/v1/recipes`
+      );
+      console.log(res);
+      return res;
     } catch (error) {
+      console.log(error);
+      console.log("rejected");
       return thunkAPI.rejectWithValue(error.data.response.msg);
     }
   }
@@ -39,7 +46,7 @@ const recipeSlice = createSlice({
     });
     builder.addCase(getAllRecipes.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error("rejected");
+      toast.error(payload);
     });
   },
 });
