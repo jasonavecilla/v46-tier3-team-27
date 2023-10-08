@@ -16,7 +16,7 @@ const RecipesGrid = () => {
 
   return (
     <div className="grid gap-4 pt-12 md:grid-cols-2 lg:grid-cols-3">
-      {popularRecipes.map((product) => {
+      {popularRecipes.map((recipe) => {
         const {
           thumbnail_url,
           name,
@@ -24,7 +24,7 @@ const RecipesGrid = () => {
           show_id,
           description,
           total_time_tier,
-        } = product;
+        } = recipe;
 
         return (
           <Link

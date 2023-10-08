@@ -1,17 +1,6 @@
 const axios = require("axios");
 
-const customFetch = async (endpoint, id, page) => {
-  limit = 10;
-  let paramsObject = {};
-  paramsObject.size = "20";
-  if (page) {
-    paramsObject.from = `${limit * (page - 1)}`;
-  } else {
-    paramsObject.from = `0`;
-  }
-  if (id) {
-    paramsObject.id = id;
-  }
+const customFetch = async (endpoint, paramsObject) => {
   const options = {
     method: "GET",
     url: `https://tasty.p.rapidapi.com/recipes/${endpoint}`,
