@@ -3,20 +3,31 @@ import { popularRecipes } from "../utils/testData";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { MdOutlineTimer } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Loading from "./Loading";
 
-const RecipesGrid = () => {
+const RecipesGrid = ({ recipes = [] }) => {
   const [favorites, setFavorites] = useState({});
-
+  const { isLoading } = useSelector((store) => store.recipes);
   const toggleFavorite = (show_id) => {
     setFavorites((prevFavorites) => ({
       ...prevFavorites,
       [show_id]: !prevFavorites[show_id] || false,
     }));
   };
-
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (recipes.length === 0) {
+    return (
+      <div className="grid gap-4 pt-12 md:grid-cols-2 lg:grid-cols-3">
+        <h1 className="text-xl font-bold">There is no recipe</h1>
+      </div>
+    );
+  }
   return (
     <div className="grid gap-4 pt-12 md:grid-cols-2 lg:grid-cols-3">
-      {popularRecipes.map((recipe) => {
+      {recipes.map((recipe) => {
         const {
           thumbnail_url,
           name,
@@ -29,7 +40,7 @@ const RecipesGrid = () => {
         return (
           <Link
             to={`/recipes/${id}`}
-            key={show_id}
+            key={id}
             className="relative w-full overflow-hidden transition duration-300 shadow-xl hover:shadow-2xl rounded-xl"
           >
             <figure className="relative px-4 pt-4">
@@ -61,13 +72,15 @@ const RecipesGrid = () => {
               <h2 className="text-lg font-bold tracking-wide capitalize">
                 {name}
               </h2>
-              <div className="flex items-center mt-2">
-                <MdOutlineTimer className="w-4 h-4 mr-2 text-red-500" />
-                {/* should use the total_time_minutes */}
-                <span>{total_time_tier.display_tier}</span>
-              </div>
+              {total_time_tier && (
+                <div className="flex items-center mt-2">
+                  <MdOutlineTimer className="w-4 h-4 mr-2 text-red-500" />
+                  {/* should use the total_time_minutes */}
+                  <span>{total_time_tier?.display_tier}</span>
+                </div>
+              )}
               <span className="mt-2 text-secondary">
-                {description.substring(0, 10)}
+                {/* {description?.substring(0, )} */}
               </span>
             </div>
           </Link>

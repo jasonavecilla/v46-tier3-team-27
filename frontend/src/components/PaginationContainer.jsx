@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useRouteLoaderData } from "react-router";
 
 const PaginationContainer = () => {
-  const pageCount = 20;
   const [page, setPage] = useState(1);
   const handleChange = (pageNumber) => {
     setPage(pageNumber);
   };
-
+  const { pages: pageCount } = useSelector((store) => store.recipes);
   const pages = Array.from({ length: pageCount }, (_, index) => {
     return index + 1;
   });
