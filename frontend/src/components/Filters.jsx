@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "react-router-dom";
 import FormInput from "./FormInput";
+import { useDispatch } from "react-redux";
+import { searchRecipes } from "../Features/Recipes/recipeSlice";
 
 const Filters = () => {
   const [search, setSearch] = useState("");
@@ -13,7 +15,14 @@ const Filters = () => {
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
-
+  const dispatch = useDispatch();
+  // Denounce search
+  useEffect(() => {
+    let timeId = setTimeout(() => {
+      dispatch(searchRecipes(search));
+    }, 1000);
+    return () => clearTimeout(timeId);
+  }, [search]);
   return (
     <Form
       onSubmit={handleSubmit}

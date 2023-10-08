@@ -1,21 +1,27 @@
 import React, { useEffect } from "react";
 import RecipesGrid from "./RecipesGrid";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllRecipes } from "../Features/Recipes/recipeSlice";
+import Loading from "./Loading";
 
 const RecipesContainer = () => {
+  const { page, search, total, isLoading, recipes } = useSelector(
+    (store) => store.recipes
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllRecipes());
-  }, []);
+    console.log(`page: ${page}`);
+  }, [page, search]);
+
   return (
     <>
       {/* HEADERS */}
       <div className="flex items-center justify-between pb-5 mt-8 border-base-300">
-        <h4 className="font-medium text-md">200 recipes</h4>
+        {total && <h4 className="font-medium text-md">{total} recipes</h4>}
       </div>
       {/* RECIPES */}
-      <RecipesGrid />
+      <RecipesGrid recipes={recipes} />
     </>
   );
 };

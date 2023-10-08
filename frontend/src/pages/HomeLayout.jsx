@@ -1,23 +1,18 @@
 import React from "react";
 import { Outlet, useNavigation } from "react-router-dom";
 import { Footer, Header, Loading, NavBar } from "../components";
+import { useSelector } from "react-redux";
 
 const HomeLayout = () => {
-  const navigation = useNavigation();
-  const isLoading = navigation.state === "loading";
-
   return (
     <>
       <Header />
       <NavBar />
 
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <section className="py-20 align-element">
-          <Outlet />
-        </section>
-      )}
+      <section className="py-20 align-element">
+        <Outlet />
+      </section>
+
       <Footer />
     </>
   );

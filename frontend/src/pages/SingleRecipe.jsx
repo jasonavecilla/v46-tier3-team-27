@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { popularRecipes } from "../utils/testData";
 import { Link } from "react-router-dom";
 import { removeUnderScore } from "../utils/textUtils";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Player } from "video-react";
+import { useDispatch, useSelector } from "react-redux";
+import { Loading } from "../components";
+import { getSingleRecipe } from "../Features/Recipes/recipeSlice";
 const SingleRecipe = () => {
+  const { isLoading, recipe } = useSelector((store) => store.recipes);
+  const dispatch = useDispatch();
   const { id } = useParams();
+  useEffect(() => {
+    dispatch(getSingleRecipe(id));
+  }, []);
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (!recipe) {
+    return null;
+  }
   const {
     thumbnail_url,
     name,
@@ -16,7 +30,8 @@ const SingleRecipe = () => {
     tags,
     original_video_url,
     nutrition,
-  } = popularRecipes[12];
+  } = recipe;
+
   return (
     <section>
       <div className="text-md breadcrumbs">

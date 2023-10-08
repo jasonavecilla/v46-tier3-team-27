@@ -1,55 +1,115 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { customFetch } from "../../utils/axios";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 const initialState = {
   isLoading: false,
   page: 1,
   search: "",
+  pages: 0,
+  total: "",
+  recipes: [],
+  recipe: null,
+  popularRecipes: [],
 };
 
 export const getAllRecipes = createAsyncThunk(
   "recipes/allRecipes",
-  async (payload, thunkAPI) => {
-    // const { search, page } = payload;
-    // let url = `recipes`;
-    // if (search) {
-    //   url = url + `&search=${search}`;
-    // }
+  async (_, thunkAPI) => {
+    const { search, page } = thunkAPI.getState().recipes;
+    let url = `recipes?page=${page}`;
+    if (search) {
+      url = url + `&search=${search}`;
+    }
 
     try {
-      const res = await axios.get(
-        `https://v46-tier3-team-27-production.up.railway.app/api/v1/recipes`
-      );
-      console.log(res);
-      return res;
+      const { data } = await customFetch.get(url);
+      console.log(data);
+
+      return data;
     } catch (error) {
-      console.log(error);
-      console.log("rejected");
-      return thunkAPI.rejectWithValue(error.data.response.msg);
+      return thunkAPI.rejectWithValue(error.response.data.msg);
     }
   }
 );
-export const getSingleRecipe = createAsyncThunk();
-export const getPopularRecipes = createAsyncThunk();
+export const getSingleRecipe = createAsyncThunk(
+  "recipes/singleRecipe",
+  async (id, thunkAPI) => {
+    try {
+      const { data } = await customFetch.get(`recipes/${id}`);
+      console.log(data);
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+export const getPopularRecipes = createAsyncThunk(
+  "recipes/popularRecipes",
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await customFetch.get(`recipes/popularRecipes`);
+      console.log(data);
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
 const recipeSlice = createSlice({
   name: "recipes",
   initialState,
-  reducers: {},
+  reducers: {
+    searchRecipes: (state, { payload }) => {
+      state.search = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllRecipes.pending, (state, { payload }) => {
       state.isLoading = true;
     });
     builder.addCase(getAllRecipes.fulfilled, (state, { payload }) => {
       state.isLoading = false;
+      const { pages, recipes, total } = payload;
+      state.pages = pages;
+      state.recipes = recipes;
+      state.total = total;
     });
     builder.addCase(getAllRecipes.rejected, (state, { payload }) => {
       state.isLoading = false;
+      console.log(payload);
+      toast.error(payload);
+    });
+    builder.addCase(getSingleRecipe.pending, (state, { payload }) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getSingleRecipe.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.recipe = payload.recipe;
+    });
+    builder.addCase(getSingleRecipe.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      console.log(payload);
+      toast.error(payload);
+    });
+    builder.addCase(getPopularRecipes.pending, (state, { payload }) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getPopularRecipes.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.popularRecipes = payload.recipes;
+    });
+    builder.addCase(getPopularRecipes.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      console.log(payload);
       toast.error(payload);
     });
   },
 });
 
-export const {} = recipeSlice.actions;
+export const { searchRecipes } = recipeSlice.actions;
 export default recipeSlice.reducer;

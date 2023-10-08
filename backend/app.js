@@ -11,9 +11,9 @@ const app = express();
 //Swagger UI
 
 //extra security packages
-
+const cors = require("cors");
 //middlewares
-
+app.use(cors());
 app.use(express.json());
 
 //routes
