@@ -7,3 +7,6 @@
     @apply max-w-6xl px-8 mx-auto;
   }
 }
+.Toastify__toast-container {
+  text-transform: uppercase;
+}
