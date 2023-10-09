@@ -60,6 +60,7 @@ export const getPopularRecipes = createAsyncThunk(
     }
   }
 );
+
 const recipeSlice = createSlice({
   name: "recipes",
   initialState,

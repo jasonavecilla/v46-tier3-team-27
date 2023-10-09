@@ -6,7 +6,7 @@ import { removeUnderScore } from "../utils/textUtils";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Player } from "video-react";
 import { useDispatch, useSelector } from "react-redux";
-import { Loading } from "../components";
+import { FavoriteButton, Loading } from "../components";
 import { getSingleRecipe } from "../Features/Recipes/recipeSlice";
 const SingleRecipe = () => {
   const { isLoading, recipe } = useSelector((store) => store.recipes);
@@ -74,12 +74,7 @@ const SingleRecipe = () => {
             )}{" "}
           </p>
           {/* LIKE BTN */}
-          <label className="mt-2 btn btn-block swap swap-rotate">
-            {/* this hidden checkbox controls the state */}
-            <input type="checkbox" />
-            <AiFillHeart className="w-12 h-10 text-red-500 swap-on hover:text-red-400" />
-            <AiOutlineHeart className="w-12 h-10 text-red-500 swap-off" />
-          </label>
+          <FavoriteButton />
         </div>
 
         {/* RECIPE */}

@@ -6,6 +6,7 @@ const errorHandler = require("./middlewares/error-handler");
 const notFound = require("./middlewares/not-found");
 const authMiddleware = require("./middlewares/auth");
 const recipeRouter = require("./route/recipeRouter");
+const likedDishesRouter = require("./route/LikedRouter");
 const app = express();
 
 //Swagger UI
@@ -19,8 +20,11 @@ app.use(express.json());
 //routes
 app.get("/", (req, res) => res.send(` Recipes API`));
 // All Routes
-app.use("/api/v1/recipes", recipeRouter);
 
+// Recipes Route
+app.use("/api/v1/recipes", recipeRouter);
+// Liked Dishes Route
+app.use("/api/v1/likedDishes", likedDishesRouter);
 //not found
 app.use(notFound);
 //error handler
