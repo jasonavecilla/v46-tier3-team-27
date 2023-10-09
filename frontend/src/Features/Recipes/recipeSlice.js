@@ -67,6 +67,9 @@ const recipeSlice = createSlice({
     searchRecipes: (state, { payload }) => {
       state.search = payload;
     },
+    handlePageChange: (state, { payload }) => {
+      state.page = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getAllRecipes.pending, (state, { payload }) => {
@@ -111,5 +114,5 @@ const recipeSlice = createSlice({
   },
 });
 
-export const { searchRecipes } = recipeSlice.actions;
+export const { searchRecipes, handlePageChange } = recipeSlice.actions;
 export default recipeSlice.reducer;
