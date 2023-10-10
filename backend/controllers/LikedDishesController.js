@@ -2,8 +2,9 @@ const LikedDish = require("../models/LikedDishes");
 const { StatusCodes } = require("http-status-codes");
 const { NotFound } = require("../errors");
 const getAllLikedDishes = async (req, res) => {
-  const likeDishes = await LikedDish.findAll({});
-
+  const { userId } = req.query;
+  let likeDishes = await LikedDish.findAll({ where: { userId } });
+  likeDishes = likeDishes.map((dish) => dish.recipe);
   res
     .status(StatusCodes.OK)
     .json({ success: true, amount: likeDishes.length, recipes: likeDishes });

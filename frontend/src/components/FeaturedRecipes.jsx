@@ -3,9 +3,11 @@ import SectionTitle from "./SectionTitle";
 import RecipesGrid from "./RecipesGrid";
 import { useDispatch, useSelector } from "react-redux";
 import { getPopularRecipes } from "../Features/Recipes/recipeSlice";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const FeaturedRecipes = () => {
   const { popularRecipes } = useSelector((store) => store.recipes);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPopularRecipes());

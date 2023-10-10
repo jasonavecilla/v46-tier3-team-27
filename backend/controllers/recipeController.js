@@ -53,8 +53,8 @@ const getSingleRecipe = async (req, res) => {
     success: true,
     recipe: {
       thumbnail_url,
+      id,
       name,
-
       yields,
       instructions,
       tags,
