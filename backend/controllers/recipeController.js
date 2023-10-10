@@ -20,11 +20,7 @@ const getAllRecipes = async (req, res) => {
   let data = await customFetch("list", paramsObject);
   const total = data.count;
   const pages = Math.ceil(total / 40);
-  const recipes = data.results.map((recipe) => {
-    const { thumbnail_url, name, id, show_id, description, total_time_tier } =
-      recipe;
-    return { thumbnail_url, name, id, show_id, description, total_time_tier };
-  });
+  const recipes = data.results
   const currentRecipesNum = recipes.length;
   res
     .status(StatusCodes.OK)
