@@ -6,7 +6,7 @@ const customFetch = async (endpoint, paramsObject) => {
     url: `https://tasty.p.rapidapi.com/recipes/${endpoint}`,
     params: paramsObject,
     headers: {
-      "X-RapidAPI-Key": "e1d3e94607msh1632b8f53337dffp109fdajsn3503455670fa",
+      "X-RapidAPI-Key": "952b88b8e9mshe59f94dc5c03010p19a7aajsn71ca71073c9b",
       "X-RapidAPI-Host": "tasty.p.rapidapi.com",
     },
   };
