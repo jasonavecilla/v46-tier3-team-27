@@ -1,11 +1,16 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Await, NavLink, useNavigate } from "react-router-dom";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { GiHotMeal } from "react-icons/gi";
 import NavLinks from "./NavLinks";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllLikedDishes,
+  getUserId,
+} from "../Features/LikedDishes/likedDishSlice";
 const themes = {
   synthwave: "synthwave",
   garden: "garden",
@@ -23,6 +28,7 @@ const toggleTheme = () => {
 };
 
 const NavBar = () => {
+  const { amount } = useSelector((store) => store.likedDish);
   // set theme
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -89,7 +95,7 @@ const NavBar = () => {
             <div className="indicator">
               <GiHotMeal className="w-6 h-6" />
               <span className="badge badge-sm badge-primary indicator-item">
-                2
+                {amount}
               </span>
             </div>
           </button>

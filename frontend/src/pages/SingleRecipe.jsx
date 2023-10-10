@@ -74,7 +74,7 @@ const SingleRecipe = () => {
             )}{" "}
           </p>
           {/* LIKE BTN */}
-          <FavoriteButton />
+          <FavoriteButton dishId={id} recipe={recipe} />
         </div>
 
         {/* RECIPE */}
@@ -94,14 +94,14 @@ const SingleRecipe = () => {
           ) : null}
 
           <p className="mt-3 text-xl">{yields} people</p>
-          <p className="mt-6 leading-8">
+          <div className="mt-6 leading-8">
             <h4 className="mb-2 text-xl font-bold">Instructions:</h4>
             <ul className="list-none">
               {instructions.map((step, index) => (
                 <li key={index}> {`${index + 1}. ${step.display_text}`}</li>
               ))}
             </ul>
-          </p>
+          </div>
           {/*  */}
         </div>
       </div>

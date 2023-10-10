@@ -7,14 +7,9 @@ import { useSelector } from "react-redux";
 import Loading from "./Loading";
 
 const RecipesGrid = ({ recipes = [] }) => {
-  const [favorites, setFavorites] = useState({});
   const { isLoading } = useSelector((store) => store.recipes);
-  const toggleFavorite = (show_id) => {
-    setFavorites((prevFavorites) => ({
-      ...prevFavorites,
-      [show_id]: !prevFavorites[show_id] || false,
-    }));
-  };
+  const { recipes: favoriteRecipes } = useSelector((store) => store.likedDish);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -36,7 +31,11 @@ const RecipesGrid = ({ recipes = [] }) => {
           description,
           total_time_tier,
         } = recipe;
-
+        console.log(id);
+        const isLiked = new Set(
+          favoriteRecipes.map((recipe) => Number(recipe.id) === Number(id))
+        ).has(true);
+        console.log(isLiked);
         return (
           <Link
             to={`/recipes/${id}`}
@@ -49,21 +48,13 @@ const RecipesGrid = ({ recipes = [] }) => {
                 alt={name}
                 className="object-cover w-full h-64 md:h-48 rounded-xl"
               />
-              <div
-                className="absolute bottom-2 right-6"
-                onClick={() => toggleFavorite(show_id)}
-              >
+              <div className="absolute bottom-2 right-6">
                 <label className="p-2 bg-white rounded-full shadow-xl swap swap-rotate">
-                  <input
-                    type="checkbox"
-                    checked={favorites[show_id] || false}
-                    readOnly
-                  />
-                  {favorites[show_id] ? (
-                    <AiFillHeart className="w-6 h-6 text-red-500 hover:text-red-400 swap-on" />
-                  ) : (
-                    <AiOutlineHeart className="w-6 h-6 text-red-500 swap-off" />
-                  )}
+                  <input type="checkbox" checked={isLiked} readOnly />
+
+                  <AiFillHeart className="w-6 h-6 text-red-500 hover:text-red-400 swap-on" />
+
+                  <AiOutlineHeart className="w-6 h-6 text-red-500 swap-off" />
                 </label>
               </div>
             </figure>
