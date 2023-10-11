@@ -18,10 +18,16 @@ const getAllRecipes = async (req, res) => {
   }
 
   let data = await customFetch("list", paramsObject);
+  if (!data) {
+    throw new BadRequest(
+      "You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https://rapidapi.com/apidojo/api/tasty"
+    );
+  }
   const total = data.count;
   const pages = Math.ceil(total / 40);
   const recipes = data.results || [];
   const currentRecipesNum = recipes.length;
+
   res
     .status(StatusCodes.OK)
     .json({ success: true, total, currentRecipesNum, pages, recipes });
