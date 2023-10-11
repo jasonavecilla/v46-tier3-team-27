@@ -8,7 +8,8 @@ import { Player } from "video-react";
 import { useDispatch, useSelector } from "react-redux";
 import { FavoriteButton, Loading, } from "../components";
 import { getSingleRecipe } from "../Features/Recipes/recipeSlice";
-import RecipeDetails  from "../components/RecipeDetails";
+import RecipeDetails from "../components/RecipeDetails";
+
 const SingleRecipe = () => {
   const { isLoading, recipe } = useSelector((store) => store.recipes);
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ const SingleRecipe = () => {
     original_video_url,
     nutrition,
   } = recipe;
+
+  console.log(recipe);
 
   return (
     <section>
@@ -67,7 +70,7 @@ const SingleRecipe = () => {
             <span className="font-bold ">Tags:</span>{" "}
             {tags.map(
               (item, index) =>
-                  index === tags.length - 1 ? "." : ", "
+                `${removeUnderScore(item.name)}${index === tags.length - 1 ? "." : ", "
                 }  `
             )}{" "}
           </p>
@@ -77,6 +80,8 @@ const SingleRecipe = () => {
 
         {/* RECIPE */}
         <div>
+          <RecipeDetails recipe={recipe} />
+
           {Object.keys(nutrition).length > 0 ? (
             <h4 className="mt-4 text-xl ">
               Nutritional Facts:
