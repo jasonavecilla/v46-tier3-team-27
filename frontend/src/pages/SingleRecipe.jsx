@@ -6,8 +6,9 @@ import { removeUnderScore } from "../utils/textUtils";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Player } from "video-react";
 import { useDispatch, useSelector } from "react-redux";
-import { FavoriteButton, Loading } from "../components";
+import { FavoriteButton, Loading, } from "../components";
 import { getSingleRecipe } from "../Features/Recipes/recipeSlice";
+import RecipeDetails  from "../components/RecipeDetails";
 const SingleRecipe = () => {
   const { isLoading, recipe } = useSelector((store) => store.recipes);
   const dispatch = useDispatch();
@@ -24,8 +25,6 @@ const SingleRecipe = () => {
   const {
     thumbnail_url,
     name,
-
-    yields,
     instructions,
     tags,
     original_video_url,
@@ -68,7 +67,6 @@ const SingleRecipe = () => {
             <span className="font-bold ">Tags:</span>{" "}
             {tags.map(
               (item, index) =>
-                `${removeUnderScore(item.name)}${
                   index === tags.length - 1 ? "." : ", "
                 }  `
             )}{" "}
@@ -79,21 +77,18 @@ const SingleRecipe = () => {
 
         {/* RECIPE */}
         <div>
-          <h1 className="text-3xl font-bold capitalize">{name}</h1>
           {Object.keys(nutrition).length > 0 ? (
-            <h4 className="mt-2 text-xl font-bold ">
+            <h4 className="mt-4 text-xl ">
               Nutritional Facts:
               {Object.keys(nutrition).map((key, index) => {
                 if (key !== "updated_at") {
-                  return ` ${key}: ${nutrition[key]}${
-                    Object.keys(nutrition).length - 1 === index ? "." : ","
-                  }`;
+                  return ` ${key}: ${nutrition[key]}${Object.keys(nutrition).length - 1 === index ? "." : ","
+                    }`;
                 }
               })}
             </h4>
           ) : null}
 
-          <p className="mt-3 text-xl">{yields} people</p>
           <div className="mt-6 leading-8">
             <h4 className="mb-2 text-xl font-bold">Instructions:</h4>
             <ul className="list-none">

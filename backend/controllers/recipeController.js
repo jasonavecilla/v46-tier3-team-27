@@ -38,12 +38,16 @@ const getSingleRecipe = async (req, res) => {
   const {
     thumbnail_url,
     name,
-
+    total_time_tier,
     yields,
     instructions,
     tags,
     original_video_url,
     nutrition,
+    user_ratings,
+    total_time_minutes,
+    prep_time_minutes,
+    cook_time_minutes
   } = data;
   res.status(StatusCodes.OK).json({
     success: true,
@@ -56,6 +60,11 @@ const getSingleRecipe = async (req, res) => {
       tags,
       original_video_url,
       nutrition,
+      total_time_tier,
+      user_ratings,
+      total_time_minutes,
+      prep_time_minutes,
+      cook_time_minutes
     },
   });
 };

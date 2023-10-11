@@ -5,6 +5,7 @@ import { MdOutlineTimer } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loading from "./Loading";
+import RatingStar from "../components/RatingStar";
 
 const RecipesGrid = ({ recipes = [] }) => {
   const { isLoading } = useSelector((store) => store.recipes);
@@ -30,8 +31,8 @@ const RecipesGrid = ({ recipes = [] }) => {
           show_id,
           description,
           total_time_tier,
+          user_ratings,
         } = recipe;
-        console.log(id);
         const isLiked = new Set(
           favoriteRecipes.map((recipe) => Number(recipe.id) === Number(id))
         ).has(true);
@@ -59,20 +60,26 @@ const RecipesGrid = ({ recipes = [] }) => {
               </div>
             </figure>
 
-            <div className="flex flex-col p-4">
-              <h2 className="text-lg font-bold tracking-wide capitalize">
-                {name}
-              </h2>
+            <div className="grid grid-cols-12 gap-2 p-4">
+              <div className="col-span-12 row-span-2">
+                <h2 className="text-lg font-bold tracking-wide capitalize">
+                  {name}
+                </h2>
+              </div>
               {total_time_tier && (
-                <div className="flex items-center mt-2">
-                  <MdOutlineTimer className="w-4 h-4 mr-2 text-red-500" />
-                  {/* should use the total_time_minutes */}
-                  <span>{total_time_tier?.display_tier}</span>
+                <div className="col-span-12 row-span-2">
+                  <div className="flex items-center mt-2">
+                    <MdOutlineTimer className="w-4 h-4 mr-2 text-red-500" />
+                    <span>{total_time_tier?.display_tier}</span>
+                  </div>
                 </div>
               )}
-              <span className="mt-2 text-secondary">
-                {/* {description?.substring(0, )} */}
-              </span>
+              <div className="col-span-8 row-span-2">
+                Small Description
+              </div>
+              <div className="col-span-4 row-span-2 items-end justify-end">
+                <RatingStar user_ratings={user_ratings} w={4} h={4} />
+              </div>
             </div>
           </Link>
         );
