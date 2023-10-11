@@ -20,7 +20,7 @@ const getAllRecipes = async (req, res) => {
   let data = await customFetch("list", paramsObject);
   const total = data.count;
   const pages = Math.ceil(total / 40);
-  const recipes = data.results
+  const recipes = data.results || [];
   const currentRecipesNum = recipes.length;
   res
     .status(StatusCodes.OK)
