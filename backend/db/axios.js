@@ -3,17 +3,16 @@ const axios = require("axios");
 const customFetch = async (endpoint, paramsObject) => {
   const options = {
     method: "GET",
-    url: `https://tasty.p.rapidapi.com/recipes/${endpoint}`,
+    url: `${process.env.RAPID_API_URL}/${endpoint}`,
     params: paramsObject,
     headers: {
-      "X-RapidAPI-Key": "952b88b8e9mshe59f94dc5c03010p19a7aajsn71ca71073c9b",
-      "X-RapidAPI-Host": "tasty.p.rapidapi.com",
+      "X-RapidAPI-Key": process.env.RAPID_API_KEY,
+      "X-RapidAPI-Host": process.env.RAPID_API_HOST,
     },
   };
   try {
     const response = await axios.request(options);
     return response.data;
-    // console.log(response.data);
   } catch (error) {
     console.error(error);
   }
