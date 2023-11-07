@@ -1,7 +1,8 @@
-import "../node_modules/video-react/dist/video-react.css"; // import css
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 import { Slide, ToastContainer } from "react-toastify";
+import { Helmet } from "react-helmet";
+import { useSelector } from "react-redux";
+
 import {
   About,
   Error,
@@ -12,6 +13,10 @@ import {
   Recipes,
   SingleRecipe,
 } from "./pages";
+
+import "../node_modules/video-react/dist/video-react.css"; // import css
+import "react-toastify/dist/ReactToastify.css";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,8 +45,14 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  const fontFamily = useSelector((state) => state.font.fontFamily);
+  const fontSize = useSelector((state) => state.font.fontSize);
+
   return (
     <>
+      <Helmet>
+        <style>{`html { font-size: ${fontSize}px; font-family: ${fontFamily}; }`}</style>
+      </Helmet>
       <RouterProvider router={router} />
       <ToastContainer
         position="top-center"

@@ -24,7 +24,6 @@ export const getAllRecipes = createAsyncThunk(
 
     try {
       const { data } = await customFetch.get(url);
-      console.log(data);
 
       return data;
     } catch (error) {
@@ -37,7 +36,6 @@ export const getSingleRecipe = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const { data } = await customFetch.get(`recipes/${id}`);
-      console.log(data);
 
       return data;
     } catch (error) {
@@ -51,7 +49,6 @@ export const getPopularRecipes = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await customFetch.get(`recipes/popularRecipes`);
-      console.log(data);
 
       return data;
     } catch (error) {

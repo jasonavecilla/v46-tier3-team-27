@@ -36,7 +36,6 @@ const RecipesGrid = ({ recipes = [] }) => {
         const isLiked = new Set(
           favoriteRecipes.map((recipe) => Number(recipe.id) === Number(id))
         ).has(true);
-        console.log(isLiked);
         return (
           <Link
             to={`/recipes/${id}`}

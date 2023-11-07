@@ -1,20 +1,24 @@
-import React from "react";
-import { Await, NavLink, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useSelector } from "react-redux";
+
 import { FaBarsStaggered } from "react-icons/fa6";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { GiHotMeal } from "react-icons/gi";
+import { AiOutlineFontSize } from "react-icons/ai";
+
 import NavLinks from "./NavLinks";
-import { useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   getAllLikedDishes,
   getUserId,
 } from "../Features/LikedDishes/likedDishSlice";
+
 const themes = {
   synthwave: "synthwave",
   garden: "garden",
 };
+
 const getThemeFromLocalStorage = () => {
   return localStorage.getItem("theme") || "synthwave";
 };
@@ -94,11 +98,16 @@ const NavBar = () => {
           >
             <div className="indicator">
               <GiHotMeal className="w-6 h-6" />
-              <span className="badge badge-sm badge-primary indicator-item">
+              <span className="badge badge-sm badge-primary indicator-item z-0">
                 {amount}
               </span>
             </div>
           </button>
+          <div className="ml-4">
+            <label htmlFor="drawer-font-setting" className="drawer-button btn">
+              <AiOutlineFontSize className="w-6 h-6" />
+            </label>
+          </div>
         </div>
       </div>
     </nav>
