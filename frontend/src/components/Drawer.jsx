@@ -16,7 +16,7 @@ function Drawer() {
   };
 
   return (
-    <div className="drawer drawer-end">
+    <div className="drawer drawer-end z-50">
       <input
         id="drawer-font-setting"
         type="checkbox"
